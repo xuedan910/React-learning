@@ -24,5 +24,11 @@ export default (state = defaultState, action) => {
     return newState
   }
 
+  if(action.type === 'init_list'){
+    let newState = JSON.parse(JSON.stringify(state))
+    newState.list = action.value
+    return newState
+  }
+
   return state
 }

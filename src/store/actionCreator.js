@@ -11,3 +11,8 @@ export const getDelteItemAction = (value) => ({
   type: 'delete_item',
   value
 })
+
+export const initListAction = (value) => ({
+  type: 'init_list',
+  value
+})
