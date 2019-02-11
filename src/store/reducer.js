@@ -1,32 +1,30 @@
-let defaultState = {
+const defaultState = {
   inputValue: '',
-  list: [],
+  list: []
 }
 
 export default (state = defaultState, action) => {
-  if(action.type === 'input_value_change'){
-    return Object.assign({}, state, {
-      inputValue: action.value,
+  if (action.type === 'input_update') {
+    let newState = Object.assign({}, state, {
+      inputValue: action.value
     })
+
+    return newState
   }
 
-  if(action.type === 'add_item' && state.inputValue.trim().length > 0){
+  if (action.type === 'add_item') {
     let newState = JSON.parse(JSON.stringify(state))
-
     newState.list.push(newState.inputValue)
     newState.inputValue = ''
+
     return newState
   }
 
-  if(action.type === 'delete_item'){
+  if (action.type === 'delete_item') {
     let newState = JSON.parse(JSON.stringify(state))
     newState.list.splice(action.value, 1)
-    return newState
-  }
+    newState.inputValue = ''
 
-  if(action.type === 'init_list'){
-    let newState = JSON.parse(JSON.stringify(state))
-    newState.list = action.value
     return newState
   }
 
