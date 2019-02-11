@@ -1,4 +1,3 @@
-import axios from 'axios'
 
 export const getInputChangeAction = (value) => ({
   type: 'input_value_change',
@@ -19,11 +18,6 @@ export const initListAction = (value) => ({
   value
 })
 
-export const getTodoList = () => {
-  return (dispatch) => {
-    axios.get('data.json').then((res) => {
-      let action = initListAction(res.data)
-      dispatch(action)
-    })
-  }
-}
+export const getListAction = () => ({
+  type: 'get_list_data'
+})
