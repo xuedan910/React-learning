@@ -1,79 +1,58 @@
-import React, { Component,Fragment } from 'react'
-import axios from 'axios'
-import TodoItem from './TodoItem'
+import React, { Component } from 'react'
 import './style.css'
+import 'antd/dist/antd.css'
+import store from './store/store.js'
+import { getInitList, addItem, inputChange, removeItem } from './store/actions'
+import TodoListUI from './TodoListUI'
 
 class TodoList extends Component {
 	constructor(props){
 		super(props)
-		this.state = {
-			inputValue: '',
-			list: [],
-			show: true
-		}
-
+		this.state = store.getState()
+ 
 		this.inputChangeHandle = this.inputChangeHandle.bind(this)
 		this.buttonClickHandle = this.buttonClickHandle.bind(this)
 		this.itemDeleteHandle = this.itemDeleteHandle.bind(this)
-		this.handleToggle = this.handleToggle.bind(this)
+		this.handleStoreUpdate = this.handleStoreUpdate.bind(this)
+		
+		store.subscribe(this.handleStoreUpdate)
 	}
-	componentDidMount(){
-		axios.get('/data.json')
-			.then((res) => {
-				this.setState(() => ({list: res.data}))
-			})
+
+	componentDidMount() {
+		let data = getInitList();
+		store.dispatch(data)
+	}
+
+	handleStoreUpdate() {
+		this.setState(store.getState())
 	}
 
 	inputChangeHandle(e){
 		let val = e.target.value
-		this.setState(() => ({
-			inputValue: val
-		}))
+		let data = inputChange(val)
+		store.dispatch(data)
 	}
 	buttonClickHandle(){
-		if(this.state.inputValue.trim().length === 0){
+		let val = this.state.inputValue.trim()
+		if(val.length === 0){
 			return false
 		}
-		this.setState((state) => ({
-			list: [...state.list, state.inputValue],
-			inputValue: ''
-		}))
+		store.dispatch(addItem())
 	}
 	itemDeleteHandle(index){
-		this.setState((state) => {
-			let list = [...state.list]
-			list.splice(index, 1)
-			return {
-				list
-			}
-		})
-	}
-	handleToggle(){
-		let status = !this.state.show
-		this.setState(() => ({
-			show: status
-		}))
+		let data = removeItem(index)
+		store.dispatch(data)
 	}
 
 	render(){
 		return (
-			<Fragment>
-				<div>
-					<input type="text" value={this.state.inputValue} onChange={this.inputChangeHandle} />
-					<button onClick={this.buttonClickHandle}>Submit</button>
-				</div>
-				<ul>
-					{this.state.list.map((item,index) => {
-						return (
-							<TodoItem key={index} content={item} index={index} onDelete={this.itemDeleteHandle} />
-						)
-					})}
-				</ul>
-				<div>
-					<p className={ this.state.show ? "show" : "hide" }>Hello World</p>
-					<button onClick={this.handleToggle}>toggle</button>
-				</div>
-			</Fragment>
+			<TodoListUI
+				inputValue={ this.state.inputValue }
+				inputChangeHandle = { this.inputChangeHandle }
+				buttonClickHandle = { this.buttonClickHandle }
+				itemDeleteHandle = { this.itemDeleteHandle }
+				list = { this.state.list }
+			/>
 		)
 	}
 }

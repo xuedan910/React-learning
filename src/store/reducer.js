@@ -1,34 +1,36 @@
-let defaultState = {
+import { INPUT_CHANGE, ADD_ITEM, REMOVE_ITEM, INIT_STORE } from './actionTypes'
+
+const data = {
   inputValue: '',
-  list: [],
+	list: [],
 }
 
-export default (state = defaultState, action) => {
-  if(action.type === 'input_value_change'){
-    return Object.assign({}, state, {
-      inputValue: action.value,
-    })
+export default (state = data, action) => {
+  switch (action.type) {
+    case INIT_STORE:
+      return Object.assign({}, state, {
+        list: [...action.data]
+      })
+
+    case ADD_ITEM:
+      return Object.assign({}, state, {
+        inputValue: '',
+        list: [...state.list, state.inputValue]
+      })
+
+    case INPUT_CHANGE:
+      return Object.assign({}, state, {
+        inputValue: action.data,
+      })
+
+    case REMOVE_ITEM:
+      let newState = Object.assign({}, state)
+      newState.list.splice(action.data, 1)
+      newState.inputValue = ''
+
+      return newState
+  
+    default:
+      return state
   }
-
-  if(action.type === 'add_item' && state.inputValue.trim().length > 0){
-    let newState = JSON.parse(JSON.stringify(state))
-
-    newState.list.push(newState.inputValue)
-    newState.inputValue = ''
-    return newState
-  }
-
-  if(action.type === 'delete_item'){
-    let newState = JSON.parse(JSON.stringify(state))
-    newState.list.splice(action.value, 1)
-    return newState
-  }
-
-  if(action.type === 'init_list'){
-    let newState = JSON.parse(JSON.stringify(state))
-    newState.list = action.value
-    return newState
-  }
-
-  return state
 }
