@@ -1,36 +1,27 @@
-import { INPUT_CHANGE, ADD_ITEM, REMOVE_ITEM, INIT_STORE } from './actionTypes'
-
-const data = {
+const defaultState = {
   inputValue: '',
-	list: [],
+  list: [],
 }
 
-export default (state = data, action) => {
-  switch (action.type) {
-    case INIT_STORE:
-      return Object.assign({}, state, {
-        list: [...action.data]
-      })
-
-    case ADD_ITEM:
-      return Object.assign({}, state, {
-        inputValue: '',
-        list: [...state.list, state.inputValue]
-      })
-
-    case INPUT_CHANGE:
-      return Object.assign({}, state, {
-        inputValue: action.data,
-      })
-
-    case REMOVE_ITEM:
-      let newState = Object.assign({}, state)
-      newState.list.splice(action.data, 1)
-      newState.inputValue = ''
-
-      return newState
-  
-    default:
-      return state
+export default (state = defaultState, action) => {
+  if(action.type === 'UPDATE_INPUT_VALUE') {
+    return Object.assign({}, state, {
+      inputValue: action.data
+    })
   }
+
+  if(action.type === 'UPDATE_LIST_VALUE') {
+    let obj = Object.assign({}, state)
+    obj.list.push(obj.inputValue)
+    obj.inputValue = ''
+    return obj
+  }
+
+  if(action.type === 'REMOVE_ITEM') {
+    let obj = Object.assign({}, state)
+    obj.list.splice(action.data, 1)
+    return obj
+  }
+
+  return state
 }

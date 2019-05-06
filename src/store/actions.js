@@ -1,34 +1,20 @@
-import { GET_INIT_LIST, INPUT_CHANGE, ADD_ITEM, REMOVE_ITEM, INIT_STORE } from './actionTypes'
-
-export function inputChange(value) {
+export function updateInputValue(data) {
   return {
-    type: INPUT_CHANGE,
-    data: value
+    type: 'UPDATE_INPUT_VALUE',
+    data
   }
 }
 
-export function addItem() {
+export function updateList(data) {
   return {
-    type: ADD_ITEM,
+    type: 'UPDATE_LIST_VALUE',
+    data
   }
 }
 
-export function removeItem(value) {
+export function removeItem(index) {
   return {
-    type: REMOVE_ITEM,
-    data: value
-  }
-}
-
-export function initStore(value) {
-  return {
-    type: INIT_STORE,
-    data: value
-  }
-}
-
-export function getInitList() {
-  return {
-    type: GET_INIT_LIST
+    type: 'REMOVE_ITEM',
+    data: index
   }
 }
