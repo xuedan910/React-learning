@@ -1,0 +1,5 @@
+export const FOCUSE_UPDATE = 'header/FOCUSE_UPDATE'
+export const INIT_LIST = 'header/INIT_LIST'
+export const NEXT_PAGE = 'header/NEXT_PAGE'
+export const MOUSE_ENTER = 'header/MOUSE_ENTER'
+export const MOUSE_LEAVE = 'header/MOUSE_LEAVE'

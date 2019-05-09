@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import TodoList from './TodoList';
-import { Provider } from 'react-redux'
-import store from './store'
+import JianShu from './JianShu';
+import { GlobalStyle } from './style.js'
 
-const App = (
-  <Provider store = {store}>
-    <TodoList />
-  </Provider>
-)
-
-ReactDOM.render(App, document.getElementById('root'));
+ReactDOM.render(
+  <Fragment>
+    <GlobalStyle />
+    <JianShu />
+  </Fragment>, 
+  document.getElementById('root'));
