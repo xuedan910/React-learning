@@ -31,7 +31,7 @@ export default (state = defaultState, action) => {
       let newPage = state.page >= state.totalPage ? 1 : state.page + 1
       return Object.assign({}, state, {
         page: newPage,
-        focused: true,
+        focused: false,
       })
     
     default:

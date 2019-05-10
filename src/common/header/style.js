@@ -169,6 +169,9 @@ export const SearchInfoSwitch = styled.span`
   font-size: 13px;
   display: flex;
   i {
+    height: 13px;
     margin-right: 5px;
+    transition: all .3s ease-in;
+    transform-origin: center center;
   }
 `

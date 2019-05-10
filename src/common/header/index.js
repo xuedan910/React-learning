@@ -39,7 +39,7 @@ class Header extends Component {
               classNames="stretch"
             >
               <SearchInput
-                onFocus={() => {this.props.handleInputFocus()}}
+                onFocus={() => this.props.handleInputFocus(this.props.list)}
                 onBlur={() => {this.props.handleInputBlur()}}>
               </SearchInput>
             </CSSTransition>
@@ -55,14 +55,14 @@ class Header extends Component {
               >
                 <div className='title'>
                   <span>热门搜索</span>
-                  <SearchInfoSwitch>
-                    <i className="fas fa-sync-alt"></i>
+                  <SearchInfoSwitch onClick={()=>{this.props.handleNextPage(this.iconSpin)}}>
+                    <i className="fas fa-sync-alt" ref={(icon) => {this.iconSpin = icon}}></i>
                     换一批
                   </SearchInfoSwitch>
                 </div>
                 <div>
                   {
-                    this.props.list.slice(this.props.page-1, 10).map((item, index) => {
+                    this.props.list.slice((this.props.page-1)*10, (this.props.page-1)*10+10).map((item, index) => {
                       return (
                         <SearchItem key={index}>{ item }</SearchItem>
                       )
@@ -88,8 +88,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleInputFocus() {
-      dispatch(actionCreators.getList())
+    handleInputFocus(list) {
+      (list.length === 0) && dispatch(actionCreators.getList())
       dispatch(actionCreators.focuseUpdate(true))
     },
     handleInputBlur() {
@@ -100,6 +100,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleMouseLeave() {
       dispatch(actionCreators.mouseLeave())
+    },
+    handleNextPage(iconSpin) {
+      let originAngle = iconSpin.style.transform.replace(/[^0-9]/ig, '')
+      originAngle = originAngle ? parseInt(originAngle) : 0
+      iconSpin.style.transform = 'rotate(' + (720+originAngle) + 'deg)'
+      dispatch(actionCreators.turnNextPage())
     }
   }
 }
