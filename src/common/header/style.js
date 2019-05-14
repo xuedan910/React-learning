@@ -5,7 +5,7 @@ export const HeaderWrapper = styled.div`
   border-bottom: 1px solid #f0f0f0;
   padding-right: 10px;
 `
-export const Logo = styled.a`
+export const Logo = styled.div`
   display: block;
   width: 100px;
   height: 56px;
@@ -43,6 +43,9 @@ export const NavWrapper = styled.div`
   @media (max-width: 500px) {
     width: 350px;
     &.hide {
+      display: none;
+    }
+    .fa-search {
       display: none;
     }
   }
@@ -84,7 +87,9 @@ export const SearchInput = styled.input.attrs({
     display: none;
   }
 `
-export const Button = styled.a`
+export const Button = styled.a.attrs({
+  href: ''
+})`
   display: inline-block;
   box-sizing: border-box;
   text-align: center;
@@ -129,6 +134,8 @@ export const SearchInfo = styled.div`
   padding: 20px;
   box-sizing: border-box;
   box-shadow: 0 0 8px rgba(0,0,0,.2);
+  background-color: #fff;
+  z-index: 99;
 
   &.show-list-enter {
     display: none;

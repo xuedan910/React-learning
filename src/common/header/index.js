@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { connect } from 'react-redux'
 import { actionCreators } from './store'
+import { Link } from 'react-router-dom'
 import {
   HeaderWrapper,
   Logo,
@@ -19,14 +20,16 @@ class Header extends Component {
   render() {
     return (
       <HeaderWrapper>
-        <Logo href='/' />
+        <Link to='/'>
+          <Logo />
+        </Link>
         <NavWrapper className='floatRight hide'>
           <NavItem grey>Aa</NavItem>
           <NavItem grey>登录</NavItem>
           <Button className='sign-up'>注册</Button>
           <Button className='writing'>
             <i className="fas fa-feather-alt" style={{marginRight: '3px'}}></i>
-            写文章
+            <span>写文章</span>
           </Button>
         </NavWrapper>
         <NavWrapper>
